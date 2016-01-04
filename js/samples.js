@@ -1,7 +1,5 @@
 /* Underscore Samples */
 
-//https://www.youtube.com/watch?v=r4XlAoRYBXI&list=PLC0FtARyNdQLOkHbwD7_nULNkMtn2P-td&index=3
-
 //Arrays
 
 var colors=["red", "green", "blue", "white", "black"];
@@ -18,7 +16,6 @@ var whiteBlack = _.last(colors, 2);
 //another syntax
 red=_(colors).first(); //first item
 black = _(colors).last(); //last item
-
 
 //compact() removes all falsy values
 var items=[2, "", true, false, 0, 1, null, "text", NaN];
@@ -179,5 +176,74 @@ var redProducts=_(products).where({color:"red"});
 //findWhere() like where() but finds only the first item by property values
 var firstRedProduct=_(products).findWhere({color:"red"});
 
+//max() & min() finds the minimum or maximum item in a collection
+var ages=[3,37,42];
+var minAge=_(ages).min();
+var maxAge=_(ages).max();
 
+var people=[
+    { name: "Carlos", age: 42, gender: "Male"   },
+    { name: "Serena", age: 32, gender: "Female" },
+    { name: "Marta" , age: 14, gender: "Female" },
+    { name: "Jose"  , age: 31, gender: "Male"   },
+    { name: "Manuel", age: 38, gender: "Male"   }
+];
 
+var youngerPerson=_(people).min(function(person, index, people){
+    return person.age;
+});
+
+var olderPerson=_(people).max(function(person, index, people){
+    return person.age;
+});
+
+//groupBy() groups items by some field
+var peopleByGender=_(people).groupBy(function(person, index, people){
+   return person.gender;
+});
+
+//sample() pulls N random non repeated items from the array
+numbers=[1,2,3,4,5,6,7,8,9];
+var sampleNumbers=_(numbers).sample(3);
+
+//size() calculates the numbers of items in an array or the number of properties in an object
+var numbersSize=_(numbers).size();
+
+var person={ name: "Carlos", age: 42, gender: "Male"   };
+var numberOfProperties=_(person).size();
+
+//sortBy() sorts an array of items
+numbers=[10,13,31,42,54,76,2,3];
+var sortedNumbers=_(numbers).sortBy();
+
+people=[
+    { name: "Carlos", age: 42, gender: "Male"   },
+    { name: "Serena", age: 32, gender: "Female" },
+    { name: "Marta" , age: 14, gender: "Female" },
+    { name: "Jose"  , age: 31, gender: "Male"   },
+    { name: "Manuel", age: 38, gender: "Male"   }
+];
+
+var peopleSortedByAge=_(people).sortBy(function(person, index, people){
+    return person.age;
+});
+
+//indexBy() creates key/value map with the key indicated in the predicate
+var peopleIndexedByName=_(people).indexBy(function(person, index, people){
+    return person.name;
+});
+
+//countBy() returns the numbers of items grouped by the predicate
+var peopleCountedByGender=_(people).countBy(function(person, index, people){
+    return person.gender;
+});
+
+//partition() divides in two groups based on the result of a predicate
+numbers=[10,13,31,42,54,76,2,3];
+var evensAndOdds=_(numbers).partition(function(number, index, numbers) {
+    return number%2==0;
+});
+
+//chain() allows chaining of functions
+values=[3, 1, 1, 56, 32, 65, null, 56, ""];
+var uniqueSortedNumbers= _.chain(values).compact().uniq().sortBy().value();
